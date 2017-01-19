@@ -1,7 +1,6 @@
 <template>
   <div>
     <nuxt/>
-    <my-footer/>
   </div>
 </template>
 
@@ -9,9 +8,7 @@
 import MyFooter from '~components/Footer.vue'
 
 export default {
-  components: {
-    MyFooter
-  }
+ 
 }
 </script>
 

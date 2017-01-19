@@ -1,13 +1,6 @@
 <template>
   <section class="container">
-    <img src="../assets/img/logo.png" alt="Nuxt.js Logo" class="logo" />
-    <h1 class="title">
-      Universal Vue.js Application Framework
-    </h1>
-    <nuxt-link class="button" to="/about">
-      About page
-    </nuxt-link>
-
+    <nuxt-link class="button" to="/about">About page</nuxt-link>
     <table>
       <thead>
         <tr>
@@ -33,40 +26,34 @@
 
 <script>
   // import firebase from 'firebase';
-   import Vue from 'vue';
-  // import VueFire from 'vuefire';
+  import Vue from 'vue';
+  import firebase from 'firebase';
 
-  // Vue.use(VueFire);
- 
-  // const booksRef = Vue.db.ref('books');
 
-  // export default {
-  //   firebase: {
-  //     books: booksRef,
-  //   },
-  //   data : () => {
-  //     return {
-  //       newBook: {
-  //         title: '',
-  //         author: '',
-  //         imageUrl: ''
-  //       }
-  //     }
-  //   },
-  //   methods: {
-  //     removeBook(book) {
-  //       booksRef.child(book['.key']).remove();
-  //     },
-  //     addBook() {
-  //       booksRef.push(this.newBook);
-  //     }
-  //   }
-  // }
+  const booksRef = firebase.app().database().ref('books');
+  console.log(booksRef);
+  
+  export default {
+    firebase: {
+      books: booksRef,
+    },
+    data : () => {
+      return {
+        newBook: {
+          title: '',
+          author: '',
+          imageUrl: ''
+        }
+      }
+    },
+    methods: {
+      removeBook(book) {
+        booksRef.child(book['.key']).remove();
+      },
+      addBook() {
+        booksRef.push(this.newBook);
+      }
+    }
+  }
 </script>
 
-<style scoped>
-.title
-{
-  margin: 50px 0;
-}
-</style>
