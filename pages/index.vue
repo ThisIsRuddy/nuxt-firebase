@@ -1,6 +1,30 @@
 <template>
   <section class="container">
-    <nuxt-link class="button" to="/about">About page</nuxt-link>
+    <nuxt-link to="/about">About page</nuxt-link>
+
+    
+    <form v-on:submit.prevent="addBook">
+      <legend>Form title</legend>
+    
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" placeholder="Please enter the book title..." v-bind="newBook.title">
+      </div>
+    
+      <div class="form-group">
+        <label for="author">author</label>
+        <input type="text" class="form-control" id="author" placeholder="Please enter the book author..." v-bind="newBook.author">
+      </div>
+
+      <div class="form-group">
+        <label for="imageUrl">Cover</label>
+        <input type="text" class="form-control" id="imageUrl" placeholder="Please enter the book Cover..." v-bind="newBook.ImageUrl">
+      </div>
+    
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <button @click="increment()">{{ $store.state.counter }}</button>
+
     <table>
       <thead>
         <tr>
@@ -27,33 +51,36 @@
 <script>
   // import firebase from 'firebase';
   import Vue from 'vue';
-  import firebase from 'firebase';
 
 
-  const booksRef = firebase.app().database().ref('books');
-  console.log(booksRef);
-  
   export default {
-    firebase: {
-      books: booksRef,
-    },
-    data : () => {
-      return {
-        newBook: {
-          title: '',
-          author: '',
-          imageUrl: ''
-        }
-      }
-    },
-    methods: {
-      removeBook(book) {
-        booksRef.child(book['.key']).remove();
+      firebase: {
+        books: this.booksRef,
       },
-      addBook() {
-        booksRef.push(this.newBook);
-      }
-    }
+      data : () => {
+        return {
+          newBook: {
+            title: '',
+            author: '',
+            imageUrl: ''
+          },
+          booksRef: this.$store.db.ref('books')
+        }
+      },
+       methods: {
+
+        removeBook(book) {
+          this.booksRef.child(book['.key']).remove();
+        },
+        addBook() {
+          this.booksRef.push(this.newBook);
+        },
+        increment() {
+          this.$store.commit('increment');
+        }
+
+       }
   }
+       
 </script>
 
